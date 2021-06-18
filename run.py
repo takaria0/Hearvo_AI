@@ -23,4 +23,4 @@ def close_users():
     return jsonify(close_user_info_id_list)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=os.environ.get("APP_PORT", 8080))

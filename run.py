@@ -10,11 +10,11 @@ VERSION = "v1"
 app = Flask(__name__)
 
 @app.route(f'/api/health', methods=['GET'])
-def main():
+def health():
     return jsonify({"Hello": "World"})
 
 @app.route(f'/api/{VERSION}/close_users', methods=['POST'])
-def main():
+def close_users():
     data = request.get_json()
     user_info_id = data["user_info_id"]
     date = data["date"]

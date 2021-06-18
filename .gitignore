@@ -1,0 +1,9 @@
+dataset/*.csv
+dataset/*.sql
+dataset/*.json
+
+env/
+
+.DS_Store
+
+__pycache__

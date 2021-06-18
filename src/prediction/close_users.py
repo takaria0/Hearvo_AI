@@ -1,7 +1,7 @@
 import pickle
 from datetime import datetime, date, timedelta
 
-from ..settings import db, BASE_DIR
+from ..settings import db, ML_MODEL_DIR
 from ..utils import set_start_date_end_date
 
 
@@ -13,10 +13,10 @@ def open_target_tree_pickle(start_date, end_date):
   end_date: '2021-06-17'
   get target month pickle
   """
-  filename = f'{BASE_DIR}{start_date}_{end_date}'
+  filename = f'{ML_MODEL_DIR}{start_date}_{end_date}'
   print('filename: ', filename)
 
-  with open(f'{BASE_DIR}{start_date}_{end_date}.pickle', 'rb') as f:
+  with open(f'{ML_MODEL_DIR}{start_date}_{end_date}.pickle', 'rb') as f:
       (tree, mlb, user_info_id_list) = pickle.load(f)
 
   if (not tree) or (not mlb):

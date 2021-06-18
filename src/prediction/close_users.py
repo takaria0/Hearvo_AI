@@ -59,14 +59,10 @@ def fetch_user_post_voted_list_from_db(user_info_id, start_date, end_date):
       """
       )
     rows = cur.fetchall()
-
     data = [row[1] for row in rows]
-
     print(f"fetched data size: {len(data)}")
-    db.close()
 
   except:
-    db.close()
     raise Exception
 
   return data

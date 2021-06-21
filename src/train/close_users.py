@@ -9,8 +9,9 @@ import numpy as np
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.neighbors import KDTree
 from google.cloud import storage
+from google.oauth2 import service_account
 
-from ..settings import db, ML_MODEL_DIR, BUCKET_NAME
+from ..settings import db, ML_MODEL_DIR, BUCKET_NAME, storage_client
 from ..utils import set_start_date_end_date
 
 
@@ -108,17 +109,6 @@ def save_data_to_GCS(data, destination_blob_name):
   # The ID of your GCS object
   # destination_blob_name = "storage-object-name"
 
-  from google.oauth2 import service_account
-  json_str = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
-  gcp_project = os.environ.get('GCP_PROJECT') 
-
-  # generate json - if there are errors here remove newlines in .env
-  json_data = json.loads(json_str)
-  # the private_key needs to replace \n parsed as string literal with escaped newlines
-  json_data['private_key'] = json_data['private_key'].replace('\\n', '\n')
-
-  credentials = service_account.Credentials.from_service_account_info(json_data)
-  storage_client = storage.Client(project=gcp_project, credentials=credentials)
 
   try:
     bucket = storage_client.bucket(BUCKET_NAME)

@@ -1,7 +1,7 @@
 import pickle
 from datetime import datetime, date, timedelta
 
-from ..settings import db, ML_MODEL_DIR
+from ..settings import db, ML_MODEL_DIR, BUCKET_NAME, storage_client
 from ..utils import set_start_date_end_date
 
 
@@ -13,11 +13,20 @@ def open_target_tree_pickle(start_date, end_date):
   end_date: '2021-06-17'
   get target month pickle
   """
-  filename = f'{ML_MODEL_DIR}{start_date}_{end_date}'
-  print('filename: ', filename)
+  
+  # filename = f'{ML_MODEL_DIR}{start_date}_{end_date}'
+  # print('filename: ', filename)
+  # with open(f'{ML_MODEL_DIR}{start_date}_{end_date}.pickle', 'rb') as f:
+  #     (tree, mlb, user_info_id_list) = pickle.load(f)
 
-  with open(f'{ML_MODEL_DIR}{start_date}_{end_date}.pickle', 'rb') as f:
-      (tree, mlb, user_info_id_list) = pickle.load(f)
+  try:
+    gcs_filename = f'close_users/{start_date}_{end_date}.pickle'
+    bucket = storage_client.get_bucket(BUCKET_NAME)
+    blob = storage.Blob(gcs_filename, bucket)
+    (tree, mlb, user_info_id_list) = pickle.loads(blob.download_as_string())
+  except:
+    import traceback; traceback.print_exc()
+    raise Exception
 
   if (not tree) or (not mlb):
     raise Exception

@@ -22,7 +22,8 @@ def close_users():
     date = data["date"]
 
     close_user_info_id_list = predict_close_users(user_info_id, date)
-    return jsonify(close_user_info_id_list)
+    res = { "close_users": close_user_info_id_list }
+    return jsonify(res)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 8080))

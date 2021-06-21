@@ -22,7 +22,7 @@ def open_target_tree_pickle(start_date, end_date):
   try:
     gcs_filename = f'close_users/{start_date}_{end_date}.pickle'
     bucket = storage_client.get_bucket(BUCKET_NAME)
-    blob = storage_client.Blob(gcs_filename, bucket)
+    blob = bucket.blob(gcs_filename)
     (tree, mlb, user_info_id_list) = pickle.loads(blob.download_as_string())
   except:
     import traceback; traceback.print_exc()

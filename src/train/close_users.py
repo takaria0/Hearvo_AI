@@ -126,11 +126,7 @@ def save_data_to_GCS(data, destination_blob_name):
 
     blob.upload_from_string(data)
 
-    print(
-        "File {} uploaded to {}.".format(
-            source_file_name, destination_blob_name
-        )
-    )
+    print("File uploaded to {}.".format(destination_blob_name))
   except:
     traceback.print_exc()
 

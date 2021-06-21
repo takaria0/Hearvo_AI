@@ -162,7 +162,7 @@ def main(today):
   """
   save trained data to Google Cloud Storage
   """
-  gcs_savedata_name = f'/close_users/{start_date}_{end_date}.pickle'
+  gcs_savedata_name = f'close_users/{start_date}_{end_date}.pickle'
   data = pickle.dumps((tree, mlb, user_info_id_list))
   save_data_to_GCS(data, gcs_savedata_name)
   """

@@ -115,10 +115,8 @@ def save_data_to_GCS(data, destination_blob_name):
   # the private_key needs to replace \n parsed as string literal with escaped newlines
   json_data['private_key'] = json_data['private_key'].replace('\\n', '\n')
 
-  credentials = service_account.Credentials.from_service_account_info(
-      json_data)
-  storage_client = storage.Client(
-      project=gcp_project, credentials=credentials
+  credentials = service_account.Credentials.from_service_account_info(json_data)
+  storage_client = storage.Client(project=gcp_project, credentials=credentials)
 
   try:
     bucket = storage_client.bucket(BUCKET_NAME)

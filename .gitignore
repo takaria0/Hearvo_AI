@@ -3,6 +3,7 @@ dataset/*.sql
 dataset/*.json
 
 env/
+secrets/
 
 .DS_Store
 

@@ -1,12 +1,14 @@
 import pickle
+import traceback
 from datetime import datetime, date, timedelta
 
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.neighbors import KDTree
+from google.cloud import storage
 
-from ..settings import db, ML_MODEL_DIR
+from ..settings import db, ML_MODEL_DIR, BUCKET_NAME
 from ..utils import set_start_date_end_date
 
 
@@ -95,6 +97,47 @@ def train_KDTree(X):
   return tree
 
 
+def save_data_to_GCS(data, destination_blob_name):
+  """Uploads a file to the bucket."""
+  # The ID of your GCS bucket
+  # bucket_name = "your-bucket-name"
+  # The path to your file to upload
+  # source_file_name = "local/path/to/file"
+  # The ID of your GCS object
+  # destination_blob_name = "storage-object-name"
+
+  from google.oauth2 import service_account
+  json_str = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+  gcp_project = os.environ.get('GCP_PROJECT') 
+
+  # generate json - if there are errors here remove newlines in .env
+  json_data = json.loads(json_str)
+  # the private_key needs to replace \n parsed as string literal with escaped newlines
+  json_data['private_key'] = json_data['private_key'].replace('\\n', '\n')
+
+  credentials = service_account.Credentials.from_service_account_info(
+      json_data)
+  storage_client = storage.Client(
+      project=gcp_project, credentials=credentials
+
+  try:
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_string(data)
+
+    print(
+        "File {} uploaded to {}.".format(
+            source_file_name, destination_blob_name
+        )
+    )
+  except:
+    traceback.print_exc()
+
+  return
+
+
+
 def main(today):
   """
   preprocess
@@ -121,7 +164,13 @@ def main(today):
   user_info_id_list = [data["user_info_id"] for data in user_info_id_to_post_id_list]
 
   """
-  save trained data
+  save trained data to Google Cloud Storage
+  """
+  gcs_savedata_name = f'/close_users/{start_date}_{end_date}.pickle'
+  data = pickle.dumps((tree, mlb, user_info_id_list))
+  save_data_to_GCS(data, gcs_savedata_name)
+  """
+  save trained data to Local (dont have to do though)
   """
   with open(f'{ML_MODEL_DIR}{start_date}_{end_date}.pickle', 'wb') as f:
       pickle.dump((tree, mlb, user_info_id_list), f)

@@ -100,7 +100,7 @@ def get_k_nearest_users(tree, X, user_info_id, k=5, user_info_id_list=None):
 
 
 
-def predict_close_users(user_info_id, input_date):
+def predict_close_users(user_info_id, input_date, k):
   today = date.today()
   start_date, end_date = set_start_date_end_date(today)
 
@@ -108,7 +108,7 @@ def predict_close_users(user_info_id, input_date):
   data = fetch_user_post_voted_list_from_db(user_info_id, start_date, end_date)
   X = data_to_feature_vector(mlb, data)
 
-  close_user_info_id_list = get_k_nearest_users(tree, X, user_info_id, k=5, user_info_id_list=user_info_id_list)
+  close_user_info_id_list = get_k_nearest_users(tree, X, user_info_id, k=k, user_info_id_list=user_info_id_list)
   return close_user_info_id_list
 
 

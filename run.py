@@ -20,8 +20,9 @@ def close_users():
     data = request.get_json()
     user_info_id = data["user_info_id"]
     date = data["date"]
+    num_of_users = data["num_of_users"]
 
-    close_user_info_id_list = predict_close_users(user_info_id, date)
+    close_user_info_id_list = predict_close_users(user_info_id, date, num_of_users)
     res = { "close_users": close_user_info_id_list }
     return jsonify(res)
 

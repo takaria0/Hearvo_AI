@@ -131,7 +131,7 @@ def main(today):
   2: create user_id to post_id_list
   3: drop users who voted less than ten
   """
-  start_date, end_date = set_start_date_end_date(today)
+  start_date, end_date = set_start_date_end_date(today, mode="train")
   print(f"{start_date=}")
   print(f"{end_date=}")
 

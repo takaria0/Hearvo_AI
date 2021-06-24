@@ -101,8 +101,7 @@ def get_k_nearest_users(tree, X, user_info_id, k=5, user_info_id_list=None):
 
 
 def predict_close_users(user_info_id, input_date, k):
-  today = date.today()
-  start_date, end_date = set_start_date_end_date(today)
+  start_date, end_date = set_start_date_end_date(input_date, mode="prediction")
 
   mlb, tree, user_info_id_list = open_target_tree_pickle(start_date, end_date)
   data = fetch_user_post_voted_list_from_db(user_info_id, start_date, end_date)

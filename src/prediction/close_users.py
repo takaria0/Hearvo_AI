@@ -26,10 +26,10 @@ def open_target_tree_pickle(start_date, end_date):
     (tree, mlb, user_info_id_list) = pickle.loads(blob.download_as_string())
   except:
     import traceback; traceback.print_exc()
-    raise Exception
+    raise ValueError("Could not get a file from Google Cloud Storage")
 
   if (not tree) or (not mlb):
-    raise Exception
+    raise ValueError("No pickle")
   
   return mlb, tree, user_info_id_list
 

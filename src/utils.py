@@ -13,7 +13,7 @@ def set_start_date_end_date(input_date, mode="train"):
   """
 
   try:
-    input_date = date.strptime(input_date, "%Y-%m")
+    input_date = datetime.strptime(input_date, "%Y-%m")
   except:
     raise ValueError("Invalid date")
   

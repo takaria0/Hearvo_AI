@@ -11,7 +11,11 @@ def set_start_date_end_date(input_date, mode="train"):
   start_date: the first day of the month
   end_date: yesterday
   """
-  
+
+  try:
+    input_date = date.strptime(input_date, "%Y-%m")
+  except:
+    raise ValueError("Invalid date")
   
   """
   input_date = today
@@ -53,7 +57,7 @@ def set_start_date_end_date(input_date, mode="train"):
     date: 2021-04
     prediction: 2021-04-01 to 2021-04-31
     """
-    this_month = datetime.date.today().strftime("%Y-%m")
+    this_month = date.today().strftime("%Y-%m")
     
     if this_month == input_date.strftime("%Y-%m"):
       start_date = input_date.strftime("%Y-%m-01")

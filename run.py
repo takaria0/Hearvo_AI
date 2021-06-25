@@ -19,7 +19,7 @@ def health():
 
 
 @app.route(f'/api/{VERSION}/train_close_users', methods=['POST'])
-def close_users():
+def train_close_users_route():
     data = request.get_json()
     input_date = datetime.strptime(data["date"], "%Y-%m-%d")
     
@@ -30,7 +30,7 @@ def close_users():
 
 
 @app.route(f'/api/{VERSION}/close_users', methods=['POST'])
-def close_users():
+def close_users_route():
     data = request.get_json()
     user_info_id = data["user_info_id"]
     date = data["date"]

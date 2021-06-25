@@ -113,8 +113,7 @@ def save_data_to_GCS(data, destination_blob_name):
   try:
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(destination_blob_name)
-
-    blob.upload_from_string(data)
+    blob.upload_from_string(data, content_type="application/octet-stream")
 
     print("File uploaded to {}.".format(destination_blob_name))
   except:

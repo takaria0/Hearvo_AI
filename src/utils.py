@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 
 def set_start_date_end_date(input_date, mode="train"):
   """
@@ -66,7 +67,7 @@ def set_start_date_end_date(input_date, mode="train"):
       
     else:
       start_date = input_date.strftime("%Y-%m-01")
-      next_month = input_date + timedelta(months=1)
+      next_month = input_date + relativedelta(months=1)
       end_date = (next_month - timedelta(days=1)).strftime("%Y-%m-%d")
     
     return start_date, end_date

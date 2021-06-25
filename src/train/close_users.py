@@ -123,14 +123,14 @@ def save_data_to_GCS(data, destination_blob_name):
 
 
 
-def main(today):
+def train_close_users(date_obj):
   """
   preprocess
   1: drop unnessesary columns
   2: create user_id to post_id_list
   3: drop users who voted less than ten
   """
-  start_date, end_date = set_start_date_end_date(today, mode="train")
+  start_date, end_date = set_start_date_end_date(date_obj, mode="train")
   print(f"{start_date=}")
   print(f"{end_date=}")
 
@@ -159,13 +159,10 @@ def main(today):
   """
   with open(f'{ML_MODEL_DIR}{start_date}_{end_date}.pickle', 'wb') as f:
       pickle.dump((tree, mlb, user_info_id_list), f)
-  return
+      
+  return gcs_savedata_name
 
 
-"""
-main
-"""
-main(date.today())
 
 
 """

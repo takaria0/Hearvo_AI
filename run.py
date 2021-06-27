@@ -25,9 +25,8 @@ trainclose users model
 @app.route(f'/api/{VERSION}/train_close_users', methods=['POST'])
 def train_close_users_route():
     data = request.get_json()
-    input_date = datetime.strptime(data["date"], "%Y-%m-%d")
     
-    filename = train_close_users(input_date)
+    filename = train_close_users(data["date"])
     res = {"message": f"uploaded trained data '{filename}' to Google Cloud Storage"}
     return jsonify(res)
 

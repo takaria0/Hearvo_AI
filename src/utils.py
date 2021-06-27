@@ -69,8 +69,8 @@ def set_start_date_end_date(input_date, mode="train"):
     
     if this_month == input_date.strftime("%Y-%m"):
       start_date = input_date.strftime("%Y-%m-01")
-      delta_oneday = timedelta(days=1)
-      end_date = (input_date - delta_oneday).strftime("%Y-%m-%d")
+      next_month = input_date + relativedelta(months=1)
+      end_date = (next_month - timedelta(days=1)).strftime("%Y-%m-%d")
       
     else:
       start_date = input_date.strftime("%Y-%m-01")

@@ -12,7 +12,14 @@ BUCKET_NAME = os.environ.get("BUCKET_NAME", "hearvo-ai-dev")
 
 
 try:
-  db = psycopg2.connect(DATABASE_URL)
+  db = psycopg2.connect(
+    DATABASE_URL,
+    connect_timeout=3,
+    keepalives=1,
+    keepalives_idle=5,
+    keepalives_interval=2,
+    keepalives_count=2)
+  
   print("Database opened successfully")
 except:
   print("Failed to connect database")

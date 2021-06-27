@@ -167,7 +167,7 @@ def train_close_users(date_obj):
 run from heroku
 """
 if __name__ == "__main__":
-  train_close_users(date.today())
+  train_close_users(date.today().strftime("%Y-%m-%d"))
 
 """
 for bulk create trained models

@@ -46,7 +46,7 @@ def close_users_route():
         return jsonify(res)
     except:
         import traceback; traceback.print_exc()
-        return jsonify({ "success": False }), 400
+        return jsonify({ "success": False, "close_users": [] }), 400
     
 
 if __name__ == '__main__':

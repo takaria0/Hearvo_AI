@@ -163,7 +163,11 @@ def train_close_users(date_obj):
   return gcs_savedata_name
 
 
-
+"""
+run from heroku
+"""
+if __name__ == "__main__":
+  train_close_users(date.today())
 
 """
 for bulk create trained models

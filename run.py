@@ -18,6 +18,10 @@ def health():
     return jsonify({"Hello": "World"})
 
 
+
+"""
+trainclose users model
+"""
 @app.route(f'/api/{VERSION}/train_close_users', methods=['POST'])
 def train_close_users_route():
     data = request.get_json()
@@ -28,17 +32,22 @@ def train_close_users_route():
     return jsonify(res)
 
 
-
+"""
+predict close users
+"""
 @app.route(f'/api/{VERSION}/close_users', methods=['POST'])
 def close_users_route():
     data = request.get_json()
     user_info_id = data["user_info_id"]
     date = data["date"]
     num_of_users = data["num_of_users"]
-
-    close_user_info_id_list = predict_close_users(user_info_id, date, num_of_users)
-    res = { "close_users": close_user_info_id_list }
-    return jsonify(res)
+    try:
+        close_user_info_id_list = predict_close_users(user_info_id, date, num_of_users)
+        res = { "success": True, "close_users": close_user_info_id_list }
+        return jsonify(res)
+    except:
+        return jsonify({ "success": False }), 400
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 8080))
